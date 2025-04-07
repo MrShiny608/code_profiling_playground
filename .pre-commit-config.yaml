@@ -1,0 +1,30 @@
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: black-local
+        name: black (local)
+        entry: pipenv run black
+        language: system
+        types: [python]
+
+      - id: flake8-local
+        name: flake8 (local)
+        entry: pipenv run flake8
+        language: system
+        types: [python]
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []

@@ -1,0 +1,22 @@
+{
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[python]": {
+    "editor.tabSize": 4
+  },
+  "flake8.args": [
+    "--config=.flake8",
+  ],
+  "flake8.importStrategy": "fromEnvironment",
+  "editor.tabSize": 2,
+  "editor.indentSize": "tabSize",
+  "files.exclude": {
+    "**/__pycache__/**": true
+  }
+}
