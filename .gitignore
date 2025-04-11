@@ -1,3 +1,5 @@
 bathroom_tiles/
 __pycache__/
 *.py[cod]
+config.yaml
+*.out

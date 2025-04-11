@@ -15,17 +15,38 @@ def create_suite() -> Suite:
 
 if __name__ == "__main__":
     # Prepare the config files
-    iterations = 100000000
-    data_range = 1000
-    data_size = 5
-    data = random.sample(range(1, data_range), data_size)
-    target = sum(random.sample(data, 2))
+    duration = 60 * 2
+    data_sizes = [
+        10,
+        100,
+        1000,
+        10000,
+        100000,
+    ]
+    data_range = max(data_sizes)
+
+    numbers = range(1, data_range + 1)
+
+    test_configs = []
+
+    for data_size in data_sizes:
+        data = random.sample(numbers, data_size)
+
+        # Set the target to an unachievable level so we can test
+        # the worse case scenario
+        target = data_range + 1
+
+        test_configs.append(
+            {
+                "target": target,
+                "data": data,
+            }
+        )
 
     config_file.write_config(
         {
-            "iterations": iterations,
-            "target": target,
-            "data": data,
+            "duration": duration,
+            "test_configs": test_configs,
         }
     )
 

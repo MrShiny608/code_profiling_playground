@@ -2,22 +2,21 @@ package main
 
 import (
 	"go_tests/go_tests/utils"
+	"time"
 )
 
-func createTest(data []int, target int) (work utils.Callable) {
+func createTest(data []int64, target int64) (work utils.Callable) {
 	work = func() (result any) {
-		hashmap := make(map[int]int)
+		hashmap := make(map[int64]int64)
 		for i, a := range data {
-			hashmap[a] = i
-		}
-
-		for i, b := range data {
-			compliment := target - b
+			compliment := target - a
 
 			index, ok := hashmap[compliment]
 			if ok {
-				return []int{i, index}
+				return []int64{int64(i), index}
 			}
+
+			hashmap[a] = int64(i)
 		}
 
 		return nil
@@ -32,15 +31,27 @@ func main() {
 		panic(err)
 	}
 
-	data_interface := config["data"].([]interface{})
-	data := make([]int, len(data_interface))
-	for i := range data_interface {
-		data[i] = data_interface[i].(int)
+	duration := time.Second * time.Duration(config["duration"].(int))
+	testConfigs := config["test_configs"].([]interface{})
+
+	tests := make([]utils.Test, len(testConfigs))
+	for i := range testConfigs {
+		testConfig := testConfigs[i].(map[string]any)
+		data_interface := testConfig["data"].([]interface{})
+		n := int64(len(data_interface))
+		data := make([]int64, n)
+
+		for j := range data_interface {
+			data[j] = int64(data_interface[j].(int))
+		}
+
+		target := int64(testConfig["target"].(int))
+		tests[i] = utils.Test{
+			Work: createTest(data, target),
+			N:    n,
+		}
 	}
 
-	target := config["target"].(int)
-	iterations := config["iterations"].(int)
-
-	profile := utils.NewProfile("Hashmap", iterations, createTest(data, target))
+	profile := utils.NewProfile("Hashmap", duration, tests)
 	profile.Run()
 }

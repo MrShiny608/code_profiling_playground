@@ -7,33 +7,41 @@ import (
 
 type Callable func() (result any)
 
-type Profile struct {
-	name       string
-	test       Callable
-	iterations int
-	duration   time.Duration
+type Test struct {
+	Work Callable
+	N    int64
 }
 
-func NewProfile(name string, iterations int, test Callable) (instance *Profile) {
+type Profile struct {
+	name     string
+	tests    []Test
+	duration time.Duration
+}
+
+func NewProfile(name string, duration time.Duration, test []Test) (instance *Profile) {
 	return &Profile{
-		name:       name,
-		test:       test,
-		iterations: iterations,
-		duration:   0,
+		name:     name,
+		tests:    test,
+		duration: duration,
 	}
 }
 
 func (instance *Profile) Run() {
 	fmt.Printf("Running test in Go\n - name: %s\n", instance.name)
 
-	// Run the test
-	start := time.Now()
+	// Run the tests
+	for _, test := range instance.tests {
+		fmt.Printf(" - N=%d", test.N)
 
-	for range instance.iterations {
-		instance.test()
+		iterations := int64(0)
+		start := time.Now()
+
+		for time.Since(start) < instance.duration {
+			test.Work()
+			iterations++
+		}
+
+		duration := time.Since(start)
+		fmt.Printf(" %dns\n", duration.Nanoseconds()/iterations)
 	}
-
-	instance.duration += time.Since(start)
-
-	fmt.Printf(" - duration: %ds\n - iterations: %d\n - average: %dns\n", int(instance.duration.Seconds()), instance.iterations, instance.duration.Nanoseconds()/int64(instance.iterations))
 }

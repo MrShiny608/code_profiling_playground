@@ -17,6 +17,7 @@
   "editor.tabSize": 2,
   "editor.indentSize": "tabSize",
   "files.exclude": {
-    "**/__pycache__/**": true
+    "**/__pycache__/**": true,
+    "**/*.out": true
   }
 }
