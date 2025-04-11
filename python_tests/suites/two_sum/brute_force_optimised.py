@@ -16,18 +16,6 @@ def create_test(data: List[int], target: int) -> Callable:
         return []
 
     return work
-    # def work() -> List[int]:
-    #     length = len(data)
-    #     for i in range(length):
-    #         compliment = target - data[i]
-
-    #         for j in range(i, length):
-    #             if data[j] == compliment:
-    #                 return [i, j]
-
-    #     return []
-
-    # return work
 
 
 if __name__ == "__main__":

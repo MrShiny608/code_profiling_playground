@@ -9,6 +9,7 @@ class Suite(object):
         self.exclude_file = exclude_file
 
     def run(self):
+        # Iterate the directory, finding files viable for execution
         for root, _, files in os.walk(self.directory):
             for file in files:
                 if file == self.exclude_file:
@@ -17,12 +18,12 @@ class Suite(object):
                 if not file.endswith(".py"):
                     continue
 
+                # Run the file in a new subprocess to reduce liklihood of code cache misses
                 file_path = os.path.join(root, file)
                 try:
                     env = os.environ.copy()
                     env["PYTHONPATH"] = os.getcwd()
 
-                    # Run the subprocess and output directly to stdout and stderr
                     subprocess.run(
                         [sys.executable, file_path],
                         cwd=root,

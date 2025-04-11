@@ -10,8 +10,8 @@ def create_test(data: List[int], target: int) -> Callable:
         for i, a in enumerate(data):
             hashmap[a] = i
 
-        for i, a in enumerate(data):
-            compliment = target - a
+        for i, b in enumerate(data):
+            compliment = target - b
 
             if compliment in hashmap:
                 return [i, hashmap[compliment]]

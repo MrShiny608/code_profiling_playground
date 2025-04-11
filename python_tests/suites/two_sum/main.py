@@ -1,8 +1,8 @@
 import os
+import random
 
 from python_tests.utils import config_file
 from python_tests.utils.suite import Suite
-import random
 
 
 def create_suite() -> Suite:
@@ -14,18 +14,21 @@ def create_suite() -> Suite:
 
 
 if __name__ == "__main__":
-    suite = create_suite()
-
+    # Prepare the config files
+    iterations = 100000000
+    data_range = 1000
     data_size = 5
-    data = random.sample(range(1, 1000), data_size)
+    data = random.sample(range(1, data_range), data_size)
     target = sum(random.sample(data, 2))
 
     config_file.write_config(
         {
-            "iterations": 100000000,
+            "iterations": iterations,
             "target": target,
             "data": data,
         }
     )
 
+    # Run the test suite
+    suite = create_suite()
     suite.run()
