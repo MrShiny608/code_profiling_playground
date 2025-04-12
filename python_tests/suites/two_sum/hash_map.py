@@ -5,17 +5,17 @@ from python_tests.utils import config_file
 
 
 def create_test(data: List[int], target: int) -> Callable:
-    def work() -> List[int]:
+    def work() -> List[int] | None:
         hashmap = {}
         for i, a in enumerate(data):
             compliment = target - a
 
             if compliment in hashmap:
-                return [i, hashmap[compliment]]
+                return [hashmap[compliment], i]
 
             hashmap[a] = i
 
-        return []
+        return None
 
     return work
 

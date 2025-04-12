@@ -15,14 +15,8 @@ def create_suite() -> Suite:
 
 if __name__ == "__main__":
     # Prepare the config files
-    duration = 60 * 2
-    data_sizes = [
-        10,
-        100,
-        1000,
-        10000,
-        100000,
-    ]
+    duration = 60 * 5
+    data_sizes = [(i + 1) * 1000 for i in range(100)]
     data_range = max(data_sizes)
 
     numbers = range(1, data_range + 1)

@@ -5,15 +5,16 @@ from python_tests.utils import config_file
 
 
 def create_test(data: List[int], target: int) -> Callable:
-    def work() -> List[int]:
+    def work() -> List[int] | None:
+        length = len(data)
         for i, a in enumerate(data):
             compliment = target - a
 
-            for j, b in enumerate(data, i):
-                if b == compliment:
+            for j in range(i + 1, length):
+                if data[j] == compliment:
                     return [i, j]
 
-        return []
+        return None
 
     return work
 

@@ -6,14 +6,14 @@ import (
 )
 
 func createTest(data []int64, target int64) (work utils.Callable) {
-	work = func() (result any) {
+	work = func() (indices any) {
 		hashmap := make(map[int64]int64)
 		for i, a := range data {
 			compliment := target - a
 
 			index, ok := hashmap[compliment]
 			if ok {
-				return []int64{int64(i), index}
+				return []int64{index, int64(i)}
 			}
 
 			hashmap[a] = int64(i)

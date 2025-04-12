@@ -11,6 +11,8 @@ pre-commit = "*"
 pep8-naming = "*"
 flake8 = "*"
 black = "*"
+pytest = "*"
+pytest-subtests = "*"
 
 [requires]
 python_version = "3.10"

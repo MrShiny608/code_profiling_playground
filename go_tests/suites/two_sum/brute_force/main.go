@@ -6,7 +6,7 @@ import (
 )
 
 func createTest(data []int64, target int64) (work utils.Callable) {
-	work = func() (result any) {
+	work = func() (indices any) {
 		length := int64(len(data))
 
 		for i := int64(0); i < length; i++ {

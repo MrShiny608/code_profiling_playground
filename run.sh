@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Read the test suite and flags from the command line
 if [ -z "${1}" ]; then
   echo "Usage: ${0} <test_suite> [-p] [-g]"
@@ -29,12 +31,24 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
+# First validate that the code does what it should - no point profiling buggy code
+
 # Run the python tests if -p flag is set
+if [ "${RUN_PYTHON}" = "true" ]; then
+  pytest python_tests/suites/${TEST_SUITE}/ --disable-warnings -v
+fi
+
+# Run the go tests if -g flag is set
+if [ "${RUN_GO}" = "true" ]; then
+  go test ./go_tests/suites/${TEST_SUITE}/...
+fi
+
+# Run the python profiling if -p flag is set
 if [ "${RUN_PYTHON}" = "true" ]; then
   python python_tests/suites/${TEST_SUITE}/main.py
 fi
 
-# Run the go tests if -g flag is set
+# Run the go profiling if -g flag is set
 if [ "${RUN_GO}" = "true" ]; then
   go build -o test_suite.out go_tests/suites/${TEST_SUITE}/main.go
   chmod +x test_suite.out

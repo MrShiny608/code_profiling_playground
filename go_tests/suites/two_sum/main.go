@@ -18,14 +18,12 @@ func createSuite() (suite *utils.Suite) {
 
 func main() {
 	// Prepare the config files
-	duration := time.Minute * 2
-	dataSizes := []int64{
-		10,
-		100,
-		1000,
-		10000,
-		100000,
+	duration := time.Minute * 5
+	dataSizes := make([]int64, 100)
+	for i := range dataSizes {
+		dataSizes[i] = int64(i+1) * 1000
 	}
+
 	dataRange := int64(1)
 	for _, size := range dataSizes {
 		if dataRange < size {
