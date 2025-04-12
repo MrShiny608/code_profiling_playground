@@ -1,5 +1,4 @@
 import os
-import random
 
 from python_tests.utils import config_file
 from python_tests.utils.suite import Suite
@@ -17,23 +16,20 @@ if __name__ == "__main__":
     # Prepare the config files
     duration = 60 * 5
     data_sizes = [(i + 1) * 1000 for i in range(100)]
-    data_range = max(data_sizes)
-
-    numbers = range(1, data_range + 1)
 
     test_configs = []
-
     for data_size in data_sizes:
-        data = random.sample(numbers, data_size)
+        # We don't actually need any real data, as we're intentionally hitting
+        # worst case scenario so don't generate a consistent dataset for use across
+        # tests, just let them generate an array of zeros of the correct size
 
-        # Set the target to an unachievable level so we can test
-        # the worse case scenario
-        target = data_range + 1
+        # Set the target to an unachievable level so we can test the worse case scenario
+        target = 1
 
         test_configs.append(
             {
                 "target": target,
-                "data": data,
+                "data_size": data_size,
             }
         )
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"math/rand"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -24,47 +23,18 @@ func main() {
 		dataSizes[i] = int64(i+1) * 1000
 	}
 
-	dataRange := int64(1)
-	for _, size := range dataSizes {
-		if dataRange < size {
-			dataRange = size
-		}
-	}
-
-	// Generate a slice of integers from 1 to 1000
-	numbers := make([]int64, dataRange)
-	for i := range dataRange {
-		numbers[i] = i + 1
-	}
-
 	testConfigs := make([]map[string]any, len(dataSizes))
-
 	for i, dataSize := range dataSizes {
-		// Select dataSize unique integers from the slice
-		for j := range dataSize {
-			// Minus i as we shift data a long but don't reduce the size of the slice
-			index := rand.Int63n(dataRange - j)
+		// We don't actually need any real data, as we're intentionally hitting
+		// worst case scenario so don't generate a consistent dataset for use across
+		// tests, just let them generate an array of zeros of the correct size
 
-			// Keep the selected value to be injected at the end
-			selected := numbers[index]
-
-			// Remove the selected integer by copying later data over it
-			copy(numbers[index:], numbers[index+1:])
-
-			// Put the newly selected entry at the end of the slice
-			numbers[dataRange-1] = selected
-		}
-
-		data := make([]int64, dataSize)
-		copy(data, numbers[dataRange-dataSize:])
-
-		// Set the target to an unachievable level so we can test
-		// the worse case scenario
-		target := dataRange + 1
+		// Set the target to an unachievable level so we can test the worse case scenario
+		target := 1
 
 		testConfigs[i] = map[string]any{
-			"target": target,
-			"data":   data,
+			"target":    target,
+			"data_size": dataSize,
 		}
 	}
 

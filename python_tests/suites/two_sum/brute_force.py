@@ -25,10 +25,10 @@ if __name__ == "__main__":
     test_configs: List[Dict] = config["test_configs"]
 
     tests: List[Test] = []
-
     for test_config in test_configs:
-        data: List[int] = test_config["data"]
         target: int = test_config["target"]
+        data_size: List[int] = test_config["data_size"]
+        data: List[int] = [0] * data_size
 
         test = Test(len(data), create_test(data, target))
         tests.append(test)

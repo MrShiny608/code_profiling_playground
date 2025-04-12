@@ -37,18 +37,14 @@ func main() {
 	tests := make([]utils.Test, len(testConfigs))
 	for i := range testConfigs {
 		testConfig := testConfigs[i].(map[string]any)
-		data_interface := testConfig["data"].([]interface{})
-		n := int64(len(data_interface))
-		data := make([]int64, n)
-
-		for j := range data_interface {
-			data[j] = int64(data_interface[j].(int))
-		}
 
 		target := int64(testConfig["target"].(int))
+		dataSize := int64(testConfig["data_size"].(int))
+		data := make([]int64, dataSize)
+
 		tests[i] = utils.Test{
 			Work: createTest(data, target),
-			N:    n,
+			N:    dataSize,
 		}
 	}
 
