@@ -1,7 +1,7 @@
 from typing import List
 from pytest_subtests import SubTests
 
-from python_tests.suites.two_sum.brute_force import create_test
+from python_tests.suites.two_sum.hash_map.main import create_test
 
 
 class Args(object):

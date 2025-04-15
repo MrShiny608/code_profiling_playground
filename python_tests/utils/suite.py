@@ -10,25 +10,19 @@ class Suite(object):
 
     def run(self):
         # Iterate the directory, finding files viable for execution
-        for root, _, files in os.walk(self.directory):
-            for file in files:
-                if file == self.exclude_file:
+        for root, directories, _ in os.walk(self.directory):
+            for directory in directories:
+                main_file_path = os.path.join(root, directory, "main.py")
+                if not os.path.isfile(main_file_path):
                     continue
 
-                if not file.endswith(".py"):
-                    continue
-
-                if file.endswith("_test.py"):
-                    continue
-
-                # Run the file in a new subprocess to reduce liklihood of code cache misses
-                file_path = os.path.join(root, file)
+                # Run the file in a new subprocess to reduce likelihood of code cache misses
                 try:
                     env = os.environ.copy()
                     env["PYTHONPATH"] = os.getcwd()
 
                     subprocess.run(
-                        [sys.executable, file_path],
+                        [sys.executable, main_file_path],
                         cwd=root,
                         env=env,
                         text=True,
@@ -37,4 +31,4 @@ class Suite(object):
                         stderr=sys.stderr,
                     )
                 except subprocess.CalledProcessError as e:
-                    print(f"Error running {file_path}:\n{e.stderr}", file=sys.stderr)
+                    print(f"Error running {main_file_path}:\n{e.stderr}", file=sys.stderr)

@@ -6,7 +6,7 @@ from typing import Any, Dict
 
 def read_config() -> Dict[str, Any]:
     caller_frame = inspect.stack()[1]
-    file_path = os.path.abspath(caller_frame.filename)
+    file_path = os.path.abspath(os.path.join(caller_frame.filename, ".."))
     current_directory = os.path.dirname(file_path)
     config_file = os.path.join(current_directory, "config.yaml")
 

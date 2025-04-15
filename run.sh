@@ -35,7 +35,7 @@ done
 
 # Run the python tests if -p flag is set
 if [ "${RUN_PYTHON}" = "true" ]; then
-  pipenv run pytest python_tests/suites/${TEST_SUITE}/ --disable-warnings -v
+  find python_tests/suites/two_sum/ -name 'main_test.py' -exec pipenv run pytest {} --disable-warnings -v \;
 fi
 
 # Run the go tests if -g flag is set
