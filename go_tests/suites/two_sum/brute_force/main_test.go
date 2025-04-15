@@ -36,7 +36,7 @@ func TestCreateTest(t *testing.T) {
 			name: "returns nil when target isn't achievable",
 			args: &args{
 				data:   []int64{1, 2, 3},
-				target: 6,
+				target: -1,
 			},
 			result: &result{
 				indices: nil,

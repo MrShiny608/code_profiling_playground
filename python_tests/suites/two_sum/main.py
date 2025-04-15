@@ -14,32 +14,25 @@ def create_suite() -> Suite:
 
 if __name__ == "__main__":
     # Prepare the config files
-    duration = 60 * 5
-    data_sizes = [(i + 1) * 1000 for i in range(100)]
+    duration = 60
+    data_sizes = [(i + 1) * 10 for i in range(100)]
 
-    test_configs = []
     for data_size in data_sizes:
         # We don't actually need any real data, as we're intentionally hitting
         # worst case scenario so don't generate a consistent dataset for use across
         # tests, just let them generate an array of zeros of the correct size
 
         # Set the target to an unachievable level so we can test the worse case scenario
-        target = 1
+        target = -1
 
-        test_configs.append(
+        config_file.write_config(
             {
+                "duration": duration,
                 "target": target,
                 "data_size": data_size,
             }
         )
 
-    config_file.write_config(
-        {
-            "duration": duration,
-            "test_configs": test_configs,
-        }
-    )
-
-    # Run the test suite
-    suite = create_suite()
-    suite.run()
+        # Run the test suite
+        suite = create_suite()
+        suite.run()

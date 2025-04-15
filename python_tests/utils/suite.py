@@ -18,6 +18,9 @@ class Suite(object):
                 if not file.endswith(".py"):
                     continue
 
+                if file.endswith("_test.py"):
+                    continue
+
                 # Run the file in a new subprocess to reduce liklihood of code cache misses
                 file_path = os.path.join(root, file)
                 try:
@@ -30,6 +33,8 @@ class Suite(object):
                         env=env,
                         text=True,
                         check=True,
+                        stdout=sys.stdout,
+                        stderr=sys.stderr,
                     )
                 except subprocess.CalledProcessError as e:
                     print(f"Error running {file_path}:\n{e.stderr}", file=sys.stderr)

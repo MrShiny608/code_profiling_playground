@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List
+from typing import Callable, List
 
 from python_tests.utils.profile import Profile, Test
 from python_tests.utils import config_file
@@ -23,16 +23,12 @@ def create_test(data: List[int], target: int) -> Callable:
 if __name__ == "__main__":
     config = config_file.read_config()
     duration: int = config["duration"]
-    test_configs: List[Dict] = config["test_configs"]
+    target: int = config["target"]
+    data_size: List[int] = config["data_size"]
 
-    tests: List[Test] = []
-    for test_config in test_configs:
-        target: int = test_config["target"]
-        data_size: List[int] = test_config["data_size"]
-        data: List[int] = [0] * data_size
+    data: List[int] = [i + 1 for i in range(data_size)]
 
-        test = Test(len(data), create_test(data, target))
-        tests.append(test)
+    test = Test(data_size, create_test(data, target))
 
-    p = Profile("Hashmap", duration, tests)
+    p = Profile("Hashmap", duration, test)
     p.run()

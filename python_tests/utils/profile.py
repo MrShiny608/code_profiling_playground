@@ -1,5 +1,5 @@
 import time
-from typing import Callable, List
+from typing import Callable
 
 
 class Test(object):
@@ -9,30 +9,28 @@ class Test(object):
 
 
 class Profile(object):
-    def __init__(self, name: str, duration: int, tests: List[Test]):
+    def __init__(self, name: str, duration: int, test: Test):
         self.name = name
-        self.tests = tests
+        self.test = test
         self.duration = duration
 
     def run(self) -> None:
-        print(f"Running test in Python\n - name: {self.name}")
+        print(f"[Python] {self.name} - N={self.test.n}", end="", flush=True)
 
-        for test in self.tests:
-            print(f" - N={test.n}", end="")
+        # Pre-warm any online/adaptive optimisation (e.g. Specializing Adaptive Interpreter, pypy, etc)
+        test = self.test
+        for _ in range(10000):
+            test.work()
 
-            # Pre-warm any online/adaptive optimisation (e.g. Specializing Adaptive Interpreter, pypy, etc)
-            for _ in range(10000):
-                test.work()
+        # Run the real test
+        iterations = 0
+        start_time = time.time()
 
-            # Run the real test
-            iterations = 0
-            start_time = time.time()
+        while (time.time() - start_time) < self.duration:
+            test.work()
+            iterations += 1
 
-            while (time.time() - start_time) < self.duration:
-                test.work()
-                iterations += 1
+        end_time = time.time()
+        duration = end_time - start_time
 
-            end_time = time.time()
-            duration = end_time - start_time
-
-            print(f" {((duration/iterations)*1e9):.0f}ns")
+        print(f" {((duration/iterations)*1e9):.0f}ns", flush=True)

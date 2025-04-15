@@ -35,7 +35,7 @@ done
 
 # Run the python tests if -p flag is set
 if [ "${RUN_PYTHON}" = "true" ]; then
-  pytest python_tests/suites/${TEST_SUITE}/ --disable-warnings -v
+  pipenv run pytest python_tests/suites/${TEST_SUITE}/ --disable-warnings -v
 fi
 
 # Run the go tests if -g flag is set
@@ -45,7 +45,7 @@ fi
 
 # Run the python profiling if -p flag is set
 if [ "${RUN_PYTHON}" = "true" ]; then
-  python python_tests/suites/${TEST_SUITE}/main.py
+  pipenv run python python_tests/suites/${TEST_SUITE}/main.py
 fi
 
 # Run the go profiling if -g flag is set

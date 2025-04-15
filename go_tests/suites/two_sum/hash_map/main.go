@@ -32,22 +32,19 @@ func main() {
 	}
 
 	duration := time.Second * time.Duration(config["duration"].(int))
-	testConfigs := config["test_configs"].([]interface{})
+	target := int64(config["target"].(int))
+	dataSize := int64(config["data_size"].(int))
 
-	tests := make([]utils.Test, len(testConfigs))
-	for i := range testConfigs {
-		testConfig := testConfigs[i].(map[string]any)
-
-		target := int64(testConfig["target"].(int))
-		dataSize := int64(testConfig["data_size"].(int))
-		data := make([]int64, dataSize)
-
-		tests[i] = utils.Test{
-			Work: createTest(data, target),
-			N:    dataSize,
-		}
+	data := make([]int64, dataSize)
+	for i := range data {
+		data[i] = int64(i) + 1
 	}
 
-	profile := utils.NewProfile("Hashmap", duration, tests)
+	test := utils.Test{
+		Work: createTest(data, target),
+		N:    dataSize,
+	}
+
+	profile := utils.NewProfile("Hashmap", duration, test)
 	profile.Run()
 }

@@ -38,7 +38,7 @@ def test_create_test(subtests: SubTests):
             "returns none when target isn't achievable",
             Args(
                 data=[1, 2, 3],
-                target=6,
+                target=-1,
             ),
             Result(
                 indices=None,
