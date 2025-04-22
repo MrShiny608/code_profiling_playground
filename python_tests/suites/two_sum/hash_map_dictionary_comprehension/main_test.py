@@ -1,7 +1,7 @@
 from typing import List
 from pytest_subtests import SubTests
 
-from python_tests.suites.two_sum.brute_force.main import create_test
+from python_tests.suites.two_sum.hash_map_dictionary_comprehension.main import create_test
 
 
 class Args(object):
@@ -31,7 +31,7 @@ def test_create_test(subtests: SubTests):
                 target=4,
             ),
             Result(
-                indices=[0, 2],
+                indices=[2, 0],
             ),
         ),
         Config(

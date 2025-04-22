@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func createTest() (work utils.Callable2_1[[]int64, int64, []int64]) {
-	work = func(data []int64, target int64) (indices []int64) {
+func createTest() (work utils.Callable2_2[[]int64, int64, int64, int64]) {
+	work = func(data []int64, target int64) (i int64, j int64) {
 		hashmap := make(map[int64]int64)
 
 		for i, a := range data {
@@ -14,13 +14,13 @@ func createTest() (work utils.Callable2_1[[]int64, int64, []int64]) {
 
 			index, ok := hashmap[compliment]
 			if ok {
-				return []int64{index, int64(i)}
+				return index, int64(i)
 			}
 
 			hashmap[a] = int64(i)
 		}
 
-		return nil
+		return -1, -1
 	}
 
 	return work
@@ -41,13 +41,13 @@ func main() {
 		data[i] = int64(i) + 1
 	}
 
-	test := utils.Test2_1[[]int64, int64, []int64]{
+	test := utils.Test2_2[[]int64, int64, int64, int64]{
 		Work:   createTest(),
 		N:      dataSize,
 		Input1: data,
 		Input2: target,
 	}
 
-	profile := utils.NewProfile2_1("Hashmap", duration, test)
+	profile := utils.NewProfile2_2("Hashmap (tuple return)", duration, test)
 	profile.Run()
 }

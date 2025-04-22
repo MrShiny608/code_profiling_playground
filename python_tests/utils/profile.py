@@ -1,11 +1,13 @@
 import time
-from typing import Callable
+from typing import Any, Callable, Dict, Tuple
 
 
 class Test(object):
-    def __init__(self, n: int, work: Callable):
+    def __init__(self, n: int, work: Callable, args: Tuple[Any, ...], kwargs: Dict[str, Any]):
         self.n = n
         self.work = work
+        self.args = args
+        self.kwargs = kwargs
 
 
 class Profile(object):
@@ -20,14 +22,14 @@ class Profile(object):
         # Pre-warm any online/adaptive optimisation (e.g. Specializing Adaptive Interpreter, pypy, etc)
         test = self.test
         for _ in range(10000):
-            test.work()
+            test.work(*test.args, **test.kwargs)
 
         # Run the real test
         iterations = 0
         start_time = time.time()
 
         while (time.time() - start_time) < self.duration:
-            test.work()
+            test.work(*test.args, **test.kwargs)
             iterations += 1
 
         end_time = time.time()

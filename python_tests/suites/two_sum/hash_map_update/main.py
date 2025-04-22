@@ -1,20 +1,24 @@
-from typing import Callable, List
+from typing import Callable, List, Tuple, Generator
 
 from python_tests.utils.profile import Profile, Test
 from python_tests.utils import config_file
 
 
+def enumerate_to_dict(data: List[int]) -> Generator[Tuple[int, int], None, None]:
+    for i, a in enumerate(data):
+        yield a, i
+
+
 def create_test() -> Callable:
     def work(data: List[int], target: int) -> List[int] | None:
         hashmap = {}
+        hashmap.update(enumerate_to_dict(data))
 
         for i, a in enumerate(data):
             compliment = target - a
 
             if compliment in hashmap:
                 return [hashmap[compliment], i]
-
-            hashmap[a] = i
 
         return None
 
@@ -36,5 +40,5 @@ if __name__ == "__main__":
         kwargs={},
     )
 
-    p = Profile("Hashmap", duration, test)
+    p = Profile("Hashmap (update)", duration, test)
     p.run()

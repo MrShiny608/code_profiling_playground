@@ -4,9 +4,10 @@ from python_tests.utils.profile import Profile, Test
 from python_tests.utils import config_file
 
 
-def create_test(data: List[int], target: int) -> Callable:
-    def work() -> List[int] | None:
+def create_test() -> Callable:
+    def work(data: List[int], target: int) -> List[int] | None:
         length = len(data)
+
         for i, a in enumerate(data):
             compliment = target - a
 
@@ -27,7 +28,12 @@ if __name__ == "__main__":
 
     data: List[int] = [i + 1 for i in range(data_size)]
 
-    test = Test(data_size, create_test(data, target))
+    test = Test(
+        data_size,
+        create_test(),
+        args=(data, target),
+        kwargs={},
+    )
 
     p = Profile("Brute force", duration, test)
     p.run()

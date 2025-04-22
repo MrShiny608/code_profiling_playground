@@ -14,7 +14,8 @@ func TestCreateTest(t *testing.T) {
 		target int64
 	}
 	type result struct {
-		indices []int64
+		i int64
+		j int64
 	}
 	type testConfig struct {
 		name   string
@@ -29,7 +30,8 @@ func TestCreateTest(t *testing.T) {
 				target: 5,
 			},
 			result: &result{
-				indices: []int64{1, 2},
+				i: 1,
+				j: 2,
 			},
 		},
 		{
@@ -39,7 +41,8 @@ func TestCreateTest(t *testing.T) {
 				target: -1,
 			},
 			result: &result{
-				indices: nil,
+				i: -1,
+				j: -1,
 			},
 		},
 	}
@@ -52,10 +55,11 @@ func TestCreateTest(t *testing.T) {
 			work := createTest()
 
 			// Act
-			indices := work(args.data, args.target)
+			i, j := work(args.data, args.target)
 
 			// Assert
-			assert.Equal(t, result.indices, indices)
+			assert.Equal(t, result.i, i)
+			assert.Equal(t, result.j, j)
 		})
 	}
 }

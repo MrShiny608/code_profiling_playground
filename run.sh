@@ -37,7 +37,12 @@ done
 if [ "${RUN_PYTHON}" = "true" ]; then
   TEST_FILES=$(find python_tests/suites/${TEST_SUITE}/ -name 'main_test.py')
   for TEST_FILE in ${TEST_FILES}; do
-    pipenv run pytest "${TEST_FILE}" --disable-warnings -v
+    pipenv run pytest "${TEST_FILE}" --disable-warnings -v || {
+      # Exit code 5 means no tests were found
+      if [ $? -ne 5 ]; then
+        exit 1
+      fi
+    }
   done
 fi
 

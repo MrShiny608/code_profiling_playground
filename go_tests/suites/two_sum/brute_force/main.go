@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func createTest(data []int64, target int64) (work utils.Callable) {
-	work = func() (indices any) {
+func createTest() (work utils.Callable2_1[[]int64, int64, []int64]) {
+	work = func(data []int64, target int64) (indices []int64) {
 		length := int64(len(data))
 
 		for i := int64(0); i < length; i++ {
@@ -40,11 +40,13 @@ func main() {
 		data[i] = int64(i) + 1
 	}
 
-	test := utils.Test{
-		Work: createTest(data, target),
-		N:    dataSize,
+	test := utils.Test2_1[[]int64, int64, []int64]{
+		Work:   createTest(),
+		N:      dataSize,
+		Input1: data,
+		Input2: target,
 	}
 
-	profile := utils.NewProfile("Brute Force", duration, test)
+	profile := utils.NewProfile2_1("Brute Force", duration, test)
 	profile.Run()
 }

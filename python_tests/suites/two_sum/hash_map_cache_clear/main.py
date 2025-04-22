@@ -5,8 +5,10 @@ from python_tests.utils import config_file
 
 
 def create_test() -> Callable:
+    hashmap = {}
+
     def work(data: List[int], target: int) -> List[int] | None:
-        hashmap = {}
+        hashmap.clear()
 
         for i, a in enumerate(data):
             compliment = target - a
@@ -36,5 +38,5 @@ if __name__ == "__main__":
         kwargs={},
     )
 
-    p = Profile("Hashmap", duration, test)
+    p = Profile("Hashmap (cache clear)", duration, test)
     p.run()

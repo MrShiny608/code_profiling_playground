@@ -49,16 +49,10 @@ func TestCreateTest(t *testing.T) {
 			// Arrange
 			args := config.args
 			result := config.result
-			work := createTest(args.data, args.target)
+			work := createTest()
 
 			// Act
-			_indices := work()
-
-			// Cast as utils.Callable interface returns any
-			var indices []int64 = nil
-			if _indices != nil {
-				indices = _indices.([]int64)
-			}
+			indices := work(args.data, args.target)
 
 			// Assert
 			assert.Equal(t, result.indices, indices)

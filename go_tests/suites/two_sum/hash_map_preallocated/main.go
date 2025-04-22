@@ -7,7 +7,7 @@ import (
 
 func createTest() (work utils.Callable2_1[[]int64, int64, []int64]) {
 	work = func(data []int64, target int64) (indices []int64) {
-		hashmap := make(map[int64]int64)
+		hashmap := make(map[int64]int64, len(data))
 
 		for i, a := range data {
 			compliment := target - a
@@ -48,6 +48,6 @@ func main() {
 		Input2: target,
 	}
 
-	profile := utils.NewProfile2_1("Hashmap", duration, test)
+	profile := utils.NewProfile2_1("Hashmap (preallocated)", duration, test)
 	profile.Run()
 }

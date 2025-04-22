@@ -6,13 +6,14 @@ from python_tests.utils import config_file
 
 def create_test() -> Callable:
     def work(data: List[int], target: int) -> List[int] | None:
-        hashmap = {}
+        hashmap = dict.fromkeys(data)
 
         for i, a in enumerate(data):
             compliment = target - a
 
-            if compliment in hashmap:
-                return [hashmap[compliment], i]
+            j = hashmap.get(compliment)
+            if j is not None:
+                return [j, i]
 
             hashmap[a] = i
 
@@ -36,5 +37,5 @@ if __name__ == "__main__":
         kwargs={},
     )
 
-    p = Profile("Hashmap", duration, test)
+    p = Profile("Hashmap (from_keys)", duration, test)
     p.run()

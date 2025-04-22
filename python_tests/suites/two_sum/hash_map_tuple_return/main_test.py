@@ -1,7 +1,7 @@
-from typing import List
+from typing import List, Tuple
 from pytest_subtests import SubTests
 
-from python_tests.suites.two_sum.brute_force.main import create_test
+from python_tests.suites.two_sum.hash_map_tuple_return.main import create_test
 
 
 class Args(object):
@@ -11,7 +11,7 @@ class Args(object):
 
 
 class Result(object):
-    def __init__(self, indices: List[int] | None):
+    def __init__(self, indices: Tuple[int, int] | None):
         self.indices = indices
 
 
@@ -31,7 +31,7 @@ def test_create_test(subtests: SubTests):
                 target=4,
             ),
             Result(
-                indices=[0, 2],
+                indices=(0, 2),
             ),
         ),
         Config(
