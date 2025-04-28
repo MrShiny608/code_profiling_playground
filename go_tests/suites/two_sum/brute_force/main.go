@@ -10,10 +10,10 @@ func createTest() (work utils.Callable2_1[[]int64, int64, []int64]) {
 		length := int64(len(data))
 
 		for i := int64(0); i < length; i++ {
-			compliment := target - data[i]
+			complement := target - data[i]
 
 			for j := i + 1; j < length; j++ {
-				if data[j] == compliment {
+				if data[j] == complement {
 					return []int64{i, j}
 				}
 			}

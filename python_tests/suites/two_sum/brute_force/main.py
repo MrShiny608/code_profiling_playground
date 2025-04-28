@@ -9,10 +9,10 @@ def create_test() -> Callable:
         length = len(data)
 
         for i, a in enumerate(data):
-            compliment = target - a
+            complement = target - a
 
             for j in range(i + 1, length):
-                if data[j] == compliment:
+                if data[j] == complement:
                     return [i, j]
 
         return None

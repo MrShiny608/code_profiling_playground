@@ -15,10 +15,10 @@ def create_test() -> Callable:
         hashmap.update(enumerate_to_dict(data))
 
         for i, a in enumerate(data):
-            compliment = target - a
+            complement = target - a
 
-            if compliment in hashmap:
-                return [hashmap[compliment], i]
+            if complement in hashmap:
+                return [hashmap[complement], i]
 
         return None
 

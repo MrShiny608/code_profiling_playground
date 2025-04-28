@@ -10,9 +10,9 @@ func createTest() (work utils.Callable2_2[[]int64, int64, int64, int64]) {
 		hashmap := make(map[int64]int64)
 
 		for i, a := range data {
-			compliment := target - a
+			complement := target - a
 
-			index, ok := hashmap[compliment]
+			index, ok := hashmap[complement]
 			if ok {
 				return index, int64(i)
 			}

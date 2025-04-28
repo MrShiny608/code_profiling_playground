@@ -9,9 +9,9 @@ def create_test() -> Callable:
         hashmap = dict.fromkeys(data)
 
         for i, a in enumerate(data):
-            compliment = target - a
+            complement = target - a
 
-            j = hashmap.get(compliment)
+            j = hashmap.get(complement)
             if j is not None:
                 return [j, i]
 
